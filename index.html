@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+        <title>Reactor</title>
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body>
+        <h1>UID</h1>
+        <form
+            method="get"
+            action="/"
+        >
+            <input type="text" name="uid">
+            <input type="submit" value="Save">
+        </form>
+        <script src="./renderer.js"></script>
+    </body>
+</html>
