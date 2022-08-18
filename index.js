@@ -60,8 +60,8 @@ const animateWindow = async (window, x) => {
 
         // console.log(y);
         window.setBounds({
-            width: 200,
-            height: 200,
+            width: 150,
+            height: 150,
             x: x,
             y: y,
         });
@@ -77,14 +77,25 @@ const animateWindow = async (window, x) => {
 const showEmoji = async (emoji) => {
     const { width } = screen.getPrimaryDisplay().workAreaSize;
     await fs.writeFile('reaction.html', reactionTemplate.replace('EMOJI_HERE', emoji));
-    const x = getRandomInt(width - 200);
+    const x = getRandomInt(width - 150);
+    const win = new BrowserWindow({
+        width: 150, 
+        height: 150,
+        transparent: true,
+        frame: false,
+        alwaysOnTop: true,
+        focusable: false,
+        fullscreenable: false,
+        skipTaskbar: true,
+        show: false,
+    });
 
     win.loadFile('reaction.html');
     win.showInactive();
     win.setPosition(x, 0);
     await animateWindow(win, x);
 
-    win.hide();
+    win.destroy();
 };
 
 // mb.on('after-create-window', () => {
@@ -97,14 +108,5 @@ mb.on('ready', async () => {
 	console.log('Menubar app is ready.');
     reactionTemplate = await fs.readFile('reaction.tmpl', 'utf-8');
 
-    win = new BrowserWindow({
-        width: 200, 
-        height: 200,
-        transparent: true,
-        frame: false,
-        alwaysOnTop: true,
-        focusable: false,
-        fullscreenable: false,
-        skipTaskbar: true,
-    }); 
+    
 });
