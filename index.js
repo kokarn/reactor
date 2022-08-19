@@ -75,7 +75,11 @@ const animateWindow = async (window, x) => {
 
 const showEmoji = async (emoji) => {
     const { width } = screen.getPrimaryDisplay().workAreaSize;
-    await fs.writeFile('reaction.html', reactionTemplate.replace('EMOJI_HERE', emoji));
+    let writeString = emoji;
+    if(emoji.length > 4){
+        writeString = `<img src="${emoji}">`;
+    }
+    await fs.writeFile('reaction.html', reactionTemplate.replace('EMOJI_HERE', writeString));
     const x = getRandomInt(width - 150);
     const win = new BrowserWindow({
         width: 150, 
