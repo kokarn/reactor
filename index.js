@@ -40,7 +40,6 @@ channel.bind('reaction', (data) => {
 });
 
 let reactionTemplate = false;
-let win;
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
