@@ -6,6 +6,8 @@ const { menubar } = require('menubar');
 const Store = require('electron-store');
 const Pusher = require('pusher-js');
 
+require('electron-reload')(__dirname);
+
 const store = new Store();
 
 const pusher = new Pusher('518ab0476ccf565431b1', {
@@ -16,27 +18,46 @@ const pusher = new Pusher('518ab0476ccf565431b1', {
     // encryptionMasterKeyBase64: ENCRYPTION_MASTER_KEY, // a base64 string which encodes 32 bytes, used to derive the per-channel encryption keys (see below!)
 });
 
-store.set('uid', 'U02CRLC7A5C');
+let configWindow;
+
+process.env.uid = store.get('uid');
+let channel = pusher.subscribe(store.get('uid'));
+
+channel.bind('reaction', (data) => {
+    console.log(data);
+    showEmoji(data);
+});
 
 ipcMain.on('set-uid', (event, uid) => {
     store.set('uid', uid);
-    socket.emit('listen', uid);
+    process.env.uid = uid;
+    pusher.subscribe(uid);
+
+    mb.window?.hide();
+    configWindow.hide();
  });
+
+ipcMain.on('show-helper', (event, uid) => {
+    mb.window?.setSize(300, 750, true);
+    configWindow.setSize(300, 750, true);
+});
+
+ipcMain.on('hide-helper', (event, uid) => {
+    mb.window?.setSize(300, 200, true);
+    configWindow.setSize(300, 200, true);
+});
 
 const easings = require('./modules/easings');
 
 const mb = menubar({
+    dir: './page',
     browserWindow: {
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'page/preload.js'),
         },
-    }
-});
-
-const channel = pusher.subscribe(store.get('uid'));
-channel.bind('reaction', (data) => {
-    console.log(data);
-    showEmoji(data);
+        width: 300,
+        height: 200,
+    },
 });
 
 let reactionTemplate = false;
@@ -111,5 +132,25 @@ mb.on('ready', async () => {
 	console.log('Menubar app is ready.');
     reactionTemplate = await fs.readFile('reaction.tmpl', 'utf-8');
 
-    
+    configWindow = new BrowserWindow({
+        width: 300, 
+        height: 200,
+        // transparent: true,
+        frame: false,
+        alwaysOnTop: true,
+        // focusable: false,
+        fullscreenable: false,
+        skipTaskbar: true,
+        show: false,
+        webPreferences: {
+            preload: path.join(__dirname, 'page/preload.js'),
+        },
+    });
+
+    if(!store.get('uid')){
+        configWindow.loadFile('page/index.html');
+        configWindow.show();
+
+        // configWindow.webContents.openDevTools({ mode: 'detach' });
+    }
 });

@@ -8,14 +8,16 @@
         <link rel="stylesheet" href="./styles.css">
     </head>
     <body>
-        <h1>UID</h1>
+        <h1>UID: <span id="id-wrapper" class="uid-wrapper"></span></h1>
         <form
             method="get"
             action="/"
         >
-            <input type="text" name="uid">
-            <input type="submit" value="Save">
+            <input type="text" name="uid" placeholder="Slack UID goes here">
+            <input type="submit" value="Save & close">
         </form>
+        <a href="#">Show me how to get my uid</a>
+        <img src="./copy-uid.gif" class="hide" />
         <script src="./renderer.js"></script>
     </body>
 </html>

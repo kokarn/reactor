@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "electron-reload": "^2.0.0-alpha.1",
     "electron-store": "^8.1.0",
     "menubar": "^9.2.1",
     "pusher-js": "^7.4.0"

@@ -1,0 +1,74 @@
+
+@font-face {
+    font-family: 'alumni_sans_pinstriperegular';
+    src: url('fonts/alumnisanspinstripe-regular-webfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, 
+body {
+    height: 100%;
+}
+
+body {
+    /* background: linear-gradient(91.9deg, rgb(93, 248, 219) 27.8%, rgb(33, 228, 246) 67%); */
+    /* background: radial-gradient(circle at 10% 20%, rgb(47, 232, 244) 0.1%, rgba(160, 244, 202, 0.86) 57.5%); */
+    background: radial-gradient(circle at 7.5% 24%, rgb(237, 161, 193) 0%, rgb(250, 178, 172) 25.5%, rgb(190, 228, 210) 62.3%, rgb(215, 248, 247) 93.8%);
+    font-family: alumni_sans_pinstriperegular;
+    color: #fff;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+}
+
+h1, 
+form,
+a {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+h1 {
+    text-align: center;
+}
+
+img,
+form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+
+input {
+    border: 0;
+    padding: 10px;
+}
+
+input[type="submit"] {
+    background-color: transparent;
+    border: 1px dashed #fff;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    color: #fff;
+    display: block;
+    text-underline-offset: 3px;
+}
+
+.uid-wrapper {
+    color: #000;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
