@@ -3,9 +3,16 @@ const helperLink = document.querySelector('a');
 
 let uid = window.data.uid || 'Not set';
 
+if(uid === 'undefined'){
+    uid = 'Not set';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#id-wrapper').innerHTML = uid;
-    document.querySelector('[name="uid"]').value = uid;
+
+    if(uid !== 'Not set'){
+        document.querySelector('[name="uid"]').value = uid;
+    }
 }, false);
 
 mainForm.addEventListener('submit', (event) => {
