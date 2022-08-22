@@ -6,6 +6,10 @@
     font-style: normal;
 }
 
+* {
+    -webkit-app-region: drag
+}
+
 html, 
 body {
     height: 100%;
