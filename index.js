@@ -24,17 +24,22 @@ let channel;
 process.env.uid = store.get('uid');
 if(store.get('uid')){
     channel = pusher.subscribe(store.get('uid'));
-}
 
 channel.bind('reaction', (data) => {
     console.log(data);
     showEmoji(data);
 });
+}
 
 ipcMain.on('set-uid', (event, uid) => {
     store.set('uid', uid);
     process.env.uid = uid;
-    pusher.subscribe(uid);
+    channel = pusher.subscribe(uid);
+
+    channel.bind('reaction', (data) => {
+        console.log(data);
+        showEmoji(data);
+    });
 
     mb.window?.hide();
     configWindow.hide();
