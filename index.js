@@ -50,7 +50,7 @@ ipcMain.on('hide-helper', (event, uid) => {
 const easings = require('./modules/easings');
 
 const mb = menubar({
-    dir: './page',
+    dir:  path.join(__dirname, 'page'),
     browserWindow: {
         webPreferences: {
             preload: path.join(__dirname, 'page/preload.js'),
@@ -130,7 +130,7 @@ app.on('window-all-closed', e => e.preventDefault() );
 
 mb.on('ready', async () => {
 	console.log('Menubar app is ready.');
-    reactionTemplate = await fs.readFile('reaction.tmpl', 'utf-8');
+    reactionTemplate = await fs.readFile(path.join(__dirname, 'reaction.tmpl'), 'utf-8');
 
     configWindow = new BrowserWindow({
         width: 300, 
@@ -148,7 +148,7 @@ mb.on('ready', async () => {
     });
 
     if(!store.get('uid')){
-        configWindow.loadFile('page/index.html');
+        configWindow.loadFile(path.join(__dirname, 'page/index.html'));
         configWindow.show();
 
         // configWindow.webContents.openDevTools({ mode: 'detach' });
