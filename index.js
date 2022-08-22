@@ -100,7 +100,7 @@ const showEmoji = async (emoji) => {
     if(emoji.length > 4){
         writeString = `<img src="${emoji}">`;
     }
-    await fs.writeFile('reaction.html', reactionTemplate.replace('EMOJI_HERE', writeString));
+
     const x = getRandomInt(width - 150);
     const win = new BrowserWindow({
         width: 150, 
@@ -114,7 +114,7 @@ const showEmoji = async (emoji) => {
         show: false,
     });
 
-    win.loadFile('reaction.html');
+    win.loadURL(`data:text/html;charset=utf-8,${reactionTemplate.replace('EMOJI_HERE', writeString)}`);
     win.showInactive();
     win.setPosition(x, 0);
     await animateWindow(win, x);
