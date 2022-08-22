@@ -19,9 +19,12 @@ const pusher = new Pusher('518ab0476ccf565431b1', {
 });
 
 let configWindow;
+let channel;
 
 process.env.uid = store.get('uid');
-let channel = pusher.subscribe(store.get('uid'));
+if(store.get('uid')){
+    channel = pusher.subscribe(store.get('uid'));
+}
 
 channel.bind('reaction', (data) => {
     console.log(data);
