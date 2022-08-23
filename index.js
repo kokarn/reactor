@@ -66,7 +66,7 @@ const mb = menubar({
         width: 300,
         height: 200,
     },
-    icon: 'icon-template.png',
+    icon: path.join(__dirname, 'icon-template.png'),
 });
 
 let reactionTemplate = false;
