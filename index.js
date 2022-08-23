@@ -77,11 +77,12 @@ function sleep(ms) {
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
+}
 
 const animateWindow = async (window, x) => {
     const { height } = screen.getPrimaryDisplay().workAreaSize;
     await sleep(1500);
+    const speed = Math.random() + Math.random() + Math.random();
 
     // for(let y = 0; y < height; y = y + 1){
     for(let i = 0; i < height; i = i + 1){
@@ -97,7 +98,7 @@ const animateWindow = async (window, x) => {
 
         window.setOpacity( 1 - y / height);
 
-        await sleep(2.5);
+        await sleep(speed);
     }
 
     return true;
