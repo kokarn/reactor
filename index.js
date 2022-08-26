@@ -21,6 +21,8 @@ const pusher = new Pusher('518ab0476ccf565431b1', {
 let configWindow;
 let channel;
 
+const emojiWidth = 100;
+
 process.env.uid = store.get('uid');
 if(store.get('uid')){
     channel = pusher.subscribe(store.get('uid'));
@@ -79,42 +81,42 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-const animateWindow = async (window, x) => {
-    const { height } = screen.getPrimaryDisplay().workAreaSize;
-    await sleep(1500);
-    const speed = Math.random() + Math.random() + Math.random();
+// const animateWindow = async (window, x) => {
+//     const { height } = screen.getPrimaryDisplay().workAreaSize;
+//     await sleep(1500);
+//     const speed = Math.random() + Math.random() + Math.random();
 
-    // for(let y = 0; y < height; y = y + 1){
-    for(let i = 0; i < height; i = i + 1){
-        const y = Math.floor(easings.easeOutSine(i / height) * height);
+//     // for(let y = 0; y < height; y = y + 1){
+//     for(let i = 0; i < height; i = i + 1){
+//         const y = Math.floor(easings.easeOutSine(i / height) * height);
 
-        // console.log(y);
-        window.setBounds({
-            width: 150,
-            height: 150,
-            x: x,
-            y: y,
-        });
+//         // console.log(y);
+//         window.setBounds({
+//             width: emojiWidth,
+//             height: 150,
+//             x: x,
+//             y: y,
+//         });
 
-        window.setOpacity( 1 - y / height);
+//         window.setOpacity( 1 - y / height);
 
-        await sleep(speed);
-    }
+//         await sleep(speed);
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 const showEmoji = async (emoji) => {
-    const { width } = screen.getPrimaryDisplay().workAreaSize;
+    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
     let writeString = emoji;
     if(emoji.length > 4){
         writeString = `<img src="${emoji}">`;
     }
 
-    const x = getRandomInt(width - 150);
+    const x = getRandomInt(width - emojiWidth);
     const win = new BrowserWindow({
-        width: 150, 
-        height: 150,
+        width: emojiWidth, 
+        height: height,
         transparent: true,
         frame: false,
         alwaysOnTop: true,
@@ -124,12 +126,14 @@ const showEmoji = async (emoji) => {
         show: false,
     });
 
-    win.loadURL(`data:text/html;charset=utf-8,${reactionTemplate.replace('EMOJI_HERE', writeString)}`);
+    win.loadURL(`data:text/html;charset=utf-8,${reactionTemplate.replace('EMOJI_HERE', writeString).replace('WINDOW_HEIGHT', `${height}px`)}`);
     win.showInactive();
     win.setPosition(x, 0);
-    await animateWindow(win, x);
+    // await animateWindow(win, x);
 
-    win.destroy();
+    setTimeout(() => {
+        win.destroy();
+    }, 4000);
 };
 
 // mb.on('after-create-window', () => {

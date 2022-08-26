@@ -3,6 +3,11 @@
       <title>Reaction Overlay</title>
     </head>
     <style>
+        html,
+        body {
+            height: 100%;
+        }
+        
         body {
             font-size: 80px;
             overflow: hidden;
@@ -13,8 +18,32 @@
             height: 100%;
             width: 100%;
         }
+
+        .emoji-wrapper {
+            animation: fadein 4s;
+            animation-timing-function: ease-in-out;
+        }
+
+        @keyframes fadein {
+            0% { 
+                opacity: 0; 
+                transform: translateY(0);
+            }
+
+            25% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100%   { 
+                opacity: 1; 
+                transform: translateY(WINDOW_HEIGHT);
+            }
+        }
     </style>
     <body>
-      EMOJI_HERE
+        <div class="emoji-wrapper">
+            EMOJI_HERE
+        </div>
     </body>
   </html>
