@@ -27,10 +27,10 @@ process.env.uid = store.get('uid');
 if(store.get('uid')){
     channel = pusher.subscribe(store.get('uid'));
 
-channel.bind('reaction', (data) => {
-    console.log(data);
-    showEmoji(data);
-});
+    channel.bind('reaction', (data) => {
+        console.log(data);
+        showEmoji(data);
+    });
 }
 
 ipcMain.on('set-uid', (event, uid) => {
@@ -45,6 +45,7 @@ ipcMain.on('set-uid', (event, uid) => {
 
     mb.window?.hide();
     configWindow.hide();
+    app.dock.hide();
  });
 
 ipcMain.on('show-helper', (event, uid) => {
@@ -69,6 +70,7 @@ const mb = menubar({
         height: 200,
     },
     icon: path.join(__dirname, 'icon-template.png'),
+    showDockIcon: false,
 });
 
 let reactionTemplate = false;
@@ -115,7 +117,7 @@ const showEmoji = async (emoji) => {
 
     const x = getRandomInt(width - emojiWidth);
     const win = new BrowserWindow({
-        width: emojiWidth, 
+        width: emojiWidth,
         height: height,
         transparent: true,
         frame: false,
@@ -142,12 +144,14 @@ const showEmoji = async (emoji) => {
 
 app.on('window-all-closed', e => e.preventDefault() );
 
+app.setActivationPolicy('accessory');
+
 mb.on('ready', async () => {
 	console.log('Menubar app is ready.');
     reactionTemplate = await fs.readFile(path.join(__dirname, 'reaction.tmpl'), 'utf-8');
 
     configWindow = new BrowserWindow({
-        width: 300, 
+        width: 300,
         height: 200,
         // transparent: true,
         frame: false,
@@ -167,4 +171,8 @@ mb.on('ready', async () => {
 
         // configWindow.webContents.openDevTools({ mode: 'detach' });
     }
+});
+
+mb.on('after-create-window', () => {
+    app.dock.hide();
 });
