@@ -18,7 +18,7 @@
     "pusher-js": "^7.4.0"
   },
   "devDependencies": {
-    "electron": "^22.3.14",
+    "electron": "^27.0.3",
     "electron-builder": "^24.4.0"
   },
   "build": {
